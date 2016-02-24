@@ -14,6 +14,10 @@ public class CountDownLatchApp {
             executor.submit(new Processor(latch));
         }
 
+        // shutdown is required to kill the threads in the pool.
+        // ExecutorService spawns non-daemon threads so that it doesn't stop until shutdown is called
+        executor.shutdown();
+
         try {
             // wait until the count reaches 0
             latch.await();
