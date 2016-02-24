@@ -8,12 +8,15 @@ public class ThreadPoolApp {
     public static void main(String[] args) {
         ExecutorService executor = Executors.newFixedThreadPool(2);
         for (int i = 0; i < 5; i++) {
+            // submit the job for execution
             executor.submit(new Processor(i));
         }
+        // makes sure the executor service is shutdown once all jobs are done
         executor.shutdown();
-
         System.out.println("All tasks submitted");
+
         try {
+            // wait until all jobs are completed or a day is over
             executor.awaitTermination(1, TimeUnit.DAYS);
         } catch (InterruptedException e) {
             e.printStackTrace();
